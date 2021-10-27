@@ -1,6 +1,6 @@
 class SubsController < ApplicationController
     before_action :require_log_in, only: %i(new create)
-    before_action :require_author, only: %i(edit update destroy)
+    before_action :require_moderator, only: %i(edit update destroy)
 
     def create
         @sub = Sub.new(sub_params)
@@ -48,5 +48,10 @@ class SubsController < ApplicationController
 
     def sub_params
         params.require(:sub).permit(:title, :description)
+    end
+
+    def require_moderator
+        sub = Sub.find(params[:id])
+        redirect_to sub_url(sub) unless sub.moderator == current_user
     end
 end
