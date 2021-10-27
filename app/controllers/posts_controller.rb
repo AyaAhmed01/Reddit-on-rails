@@ -43,6 +43,11 @@ class PostsController < ApplicationController
     
     private
     def post_params
-        params.require(:post).permit(:title, :content, :url, :sub)
+        params.require(:post).permit(:title, :content, :url, sub_ids:[])
+    end
+
+    def require_author
+        post = Post.find(params[:id])
+        redirect_to post_url(post) unless post.author == current_user
     end
 end
