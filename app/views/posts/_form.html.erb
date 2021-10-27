@@ -1,0 +1,30 @@
+<form action= <%=post_url%> method="POST">
+    <% if post.persisted? %>
+        <input type="hidden" name="_method" value="PUT">
+    <%end%>
+    
+    <%= auth_token_helper %>
+    <label>
+        Title 
+        <input type="text" name="post[title]" value="<%= @post.title%>">
+    </label>
+    <label>
+        URL 
+        <input type="text" name="post[url]" value="<%= @post.url%>">
+    </label>
+    <label>
+        Content 
+        <textarea name="post[content]"><%=@post.content%></textarea>
+    </label>
+    <label>
+        Subs 
+        <input type="hidden" name="post[sub_id][]" value="">
+        <%Sub.all.each do |sub|%>
+            <label>
+                <%=sub.title%>
+                <input type="checkbox" name="post[sub_ids][]" <%= checked if @post.sub_ids.include?(sub.id)%>>
+            </label>
+        <%end%>
+    </label>
+    <input type="submit" value="<%=submit_text%>">
+</form>
