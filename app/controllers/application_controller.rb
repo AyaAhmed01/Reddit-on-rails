@@ -1,10 +1,11 @@
 class ApplicationController < ActionController::Base
+    
+    # Expose these methods to the views
     helper_method :current_user, :logged_in?
 
+    private 
     def current_user
         @current_user ||= User.find_by(session_token: session[:session_token])
-        return  @current_user if logged_in?
-        nil 
     end
 
     def logged_in?
