@@ -2,11 +2,12 @@
     <%=auth_token_helper%>
     <label>
         User name
-        <input type="text" name="user[user_name]" value="<%=user.user_name%>"
+        <input type="text" name="user[user_name]" value="<%=user.user_name unless user.nil?%>">
     </label>
     <label>
         Password
         <input type="text" name="user[password]">
     </label>
-    <input type="submit" value="<%=submit_text%>"
+    <input type="submit" value="<%=submit_text%>">
 </form>
+
