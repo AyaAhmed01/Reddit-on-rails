@@ -1,2 +1,5 @@
 <h1> Content </h1>
-<%= @comment.content%>
+<%= @comment.content%>  
+<br> 
+<b> Reply to this comment: <b>
+<%= render 'new_comment_form', comment: @child_comment %> 

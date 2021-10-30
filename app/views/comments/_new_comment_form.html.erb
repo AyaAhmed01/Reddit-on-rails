@@ -1,0 +1,22 @@
+<form action="<%=comments_url%>" method="POST">
+    <input
+    type="hidden"
+    name="authenticity_token"
+    value="<%= form_authenticity_token %>">
+    
+    <input 
+    type="hidden"
+    name="comment[post_id]"
+    value="<%=@comment.post_id%>">  <!-- parent comment -->
+
+    <input 
+    type="hidden"
+    name="comment[parent_comment_id]"
+    value="<%=comment.parent_comment_id%>"> 
+
+    <label>
+        Body
+        <textarea name="comment[content]"> <%=comment.content%> </textarea>
+    </label>
+    <input type="submit" value="Submit">
+</form>
