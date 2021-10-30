@@ -3,7 +3,7 @@ class SubsController < ApplicationController
     before_action :require_moderator, only: %i(edit update destroy)
 
     def create
-        @sub = Sub.new(sub_params)
+        @sub = current_user.subs.new(sub_params)
         if @sub.save 
             redirect_to sub_url(@sub) 
         else
@@ -17,21 +17,22 @@ class SubsController < ApplicationController
     end
 
     def edit 
-        @sub = Sub.new 
+        @sub = Sub.find(params[:id])
     end
 
-    def update
-        @sub = Sub.update_attributes(sub_params)
-        if @sub.save 
+    def update        
+        @sub = Sub.find(params[:id])
+        if @sub.update(sub_params)
+            flash[:success] = "Sub edited!"
             redirect_to sub_url(@sub) 
-        else
+        else 
             flash.now[:errors] = @sub.errors.full_messages
             render :edit 
         end
     end
 
-    def index 
-        @subs = Sub.all 
+    def index  
+        @subs = Sub.all  
     end
 
     def show
@@ -52,6 +53,9 @@ class SubsController < ApplicationController
 
     def require_moderator
         sub = Sub.find(params[:id])
-        redirect_to sub_url(sub) unless sub.moderator == current_user
+        unless sub.moderator == current_user
+            flash[:notice] = "Only moderator can edit a sub"
+            redirect_to sub_url(sub)
+        end
     end
 end
