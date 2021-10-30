@@ -14,5 +14,11 @@ class Post < ApplicationRecord
 
     has_many :subs, 
         through: :taggings, 
-        source: :sub 
+        source: :sub
+    
+    has_many :comments
+    
+    def top_level_comments
+        self.comments.where(parent_comment_id: nil)
+    end
 end
