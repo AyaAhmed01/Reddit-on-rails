@@ -2,11 +2,9 @@
 <%= comment.created_at %>
 <%= link_to comment.content, comment_url(comment) %>
 <ul>
-    <% all_comments.each do |child_comment| %>
-        <% if child_comment.parent_comment_id == comment.id %>
-            <li> 
-                <%= render 'comment', comment: child_comment, all_comments: all_comments %>
-            </li>    
-        <% end %>
+    <% all_comments[comment.id].each do |child_comment| %>
+        <li> 
+            <%= render 'comment', comment: child_comment, all_comments: all_comments %>
+        </li>    
     <% end %>
 </ul> 

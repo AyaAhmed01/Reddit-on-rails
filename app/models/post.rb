@@ -21,4 +21,10 @@ class Post < ApplicationRecord
     def top_level_comments
         self.comments.where(parent_comment_id: nil)
     end
+
+    def comments_by_parent_id
+        comments = Hash.new{|h, k| h[k] = []}
+        self.comments.includes(:author).each { |comment| comments[comment.parent_comment_id] << comment }
+        comments
+    end
 end
