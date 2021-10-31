@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
     def create
         @post = Post.new(post_params)
+        @post.author = current_user 
         if @post.save 
             redirect_to post_url(@post) 
         else
@@ -17,12 +18,12 @@ class PostsController < ApplicationController
     end
 
     def edit
-        @post = Post.new  
+        @post = Post.find(params[:id]) 
     end
 
     def update
-        @post = Post.update_attributes(post_params)
-        if @post.save 
+        @post = Post.find(params[:id])
+        if @post.update(post_params)
             redirect_to post_url(@post) 
         else
             flash.now[:errors] = @post.errors.full_messages
@@ -39,6 +40,7 @@ class PostsController < ApplicationController
 
     def show
         @post = Post.find(params[:id])
+        @all_comments = @post.comments.includes(:author)
     end
     
     private

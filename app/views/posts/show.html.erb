@@ -11,10 +11,12 @@
 <%=link_to "Comment on this post!", new_post_comment_url(@post)%>
 <br>
 <ul>
-    <% @post.top_level_comments.each do |comment| %>
+    <% @all_comments.each do |comment| %>
+        <% if comment.parent_comment_id.nil? %>
             <li> 
-                <%= render "comment", comment: comment %>
-            </li>        
-    <%end%>
+                <%= render 'comment', comment: comment, all_comments: @all_comments %>
+            </li>    
+        <% end %>
+    <% end %>
 </ul>
 <%=link_to "Edit post", edit_post_url(@post)%>

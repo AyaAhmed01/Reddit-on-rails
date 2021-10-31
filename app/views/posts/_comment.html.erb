@@ -1,8 +1,12 @@
+<%= comment.author.user_name %>
+<%= comment.created_at %>
 <%= link_to comment.content, comment_url(comment) %>
 <ul>
-    <% comment.child_comments.each do |child_comment| %>
-        <li> 
-            <%= render "comment", comment: child_comment %>
-        </li>
+    <% all_comments.each do |child_comment| %>
+        <% if child_comment.parent_comment_id == comment.id %>
+            <li> 
+                <%= render 'comment', comment: child_comment, all_comments: all_comments %>
+            </li>    
+        <% end %>
     <% end %>
 </ul> 
