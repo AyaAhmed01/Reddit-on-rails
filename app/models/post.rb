@@ -1,4 +1,6 @@
 class Post < ApplicationRecord
+    include Votable
+    
     validates :title, presence: true 
     validates :subs, presence: {message: 'must have at least one sub'}
     
@@ -17,6 +19,8 @@ class Post < ApplicationRecord
         source: :sub
     
     has_many :comments
+
+    has_many :votes, as: :votable
     
     def top_level_comments
         self.comments.where(parent_comment_id: nil)

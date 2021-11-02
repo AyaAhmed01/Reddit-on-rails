@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+    include Votable
+    
     validates :content, presence: true
     
     belongs_to :author, 
@@ -13,5 +15,7 @@ class Comment < ApplicationRecord
 
     belongs_to :parent_comment,
         class_name: 'Comment',
-        optional: true      # parent_comment_id is null for top-level comments    
+        optional: true                # parent_comment_id is null for top-level comments   
+        
+    has_many :votes, as: :votable
 end
