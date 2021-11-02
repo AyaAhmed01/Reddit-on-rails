@@ -1,5 +1,5 @@
 class PostsController < ApplicationController 
-    before_action :require_signed_in!, only: %i(new create)
+    before_action :require_signed_in!, only: %i(new create upvote downvote)
     before_action :require_author!, only: %i(edit update destroy)
 
     def create

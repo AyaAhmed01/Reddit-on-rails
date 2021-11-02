@@ -1,5 +1,5 @@
 class SubsController < ApplicationController
-    before_action :require_signed_in!, only: %i(new create)
+    before_action :require_signed_in!, except: %i(index show)
     before_action :require_moderator, only: %i(edit update destroy)
 
     def create
@@ -41,9 +41,25 @@ class SubsController < ApplicationController
     end
 
     def destroy
-        sub = Sub.find(params[:id])
+        sub = Sub.friendly.find(params[:id])
         sub.destroy
         redirect_to subs_url
+    end
+
+    def subscribe
+        sub = Sub.friendly.find(params[:id])
+        subscription = sub.subscriptions.new(user: current_user)
+        unless subscription.save 
+            flash.errors[:error] = subscription.errors.full_messages
+        end
+        redirect_to sub_url(sub)
+    end
+
+    def unsubscribe
+        sub = Sub.friendly.find(params[:id])
+        subscription = sub.subscriptions.find_by(user: current_user)
+        subscription.destroy
+        redirect_to sub_url(sub)
     end
 
     private
@@ -53,7 +69,7 @@ class SubsController < ApplicationController
     end
 
     def require_moderator
-        sub = Sub.find(params[:id])
+        sub = Sub.friendly.find(params[:id])
         unless sub.moderator == current_user
             flash[:notice] = "Only moderator can edit a sub"
             redirect_to sub_url(sub)
