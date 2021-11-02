@@ -16,4 +16,12 @@ class Sub < ApplicationRecord
     has_many :posts, 
         through: :taggings,
         source: :post
+
+    has_many :subscriptions,
+        dependent: :destroy, 
+        inverse_of: :sub  
+
+    has_many :subscribed_users,
+        through: :subscriptions, 
+        source: :user 
 end
