@@ -1,5 +1,5 @@
 class SubsController < ApplicationController
-    before_action :require_log_in, only: %i(new create)
+    before_action :require_signed_in!, only: %i(new create)
     before_action :require_moderator, only: %i(edit update destroy)
 
     def create
@@ -17,11 +17,11 @@ class SubsController < ApplicationController
     end
 
     def edit 
-        @sub = Sub.find(params[:id])
+        @sub = Sub.friendly.find(params[:id])
     end
 
     def update        
-        @sub = Sub.find(params[:id])
+        @sub = Sub.friendly.find(params[:id])
         if @sub.update(sub_params)
             flash[:success] = "Sub edited!"
             redirect_to sub_url(@sub) 
@@ -36,7 +36,8 @@ class SubsController < ApplicationController
     end
 
     def show
-        @sub = Sub.find(params[:id])
+        @sub = Sub.friendly.find(params[:id])
+        @posts = @sub.posts.includes(:votes)
     end
 
     def destroy

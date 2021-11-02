@@ -1,5 +1,7 @@
 class Post < ApplicationRecord
     include Votable
+    extend FriendlyId
+    friendly_id :title, use: :slugged
     
     validates :title, presence: true 
     validates :subs, presence: {message: 'must have at least one sub'}
