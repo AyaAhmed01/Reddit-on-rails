@@ -2,11 +2,19 @@
     <%=auth_token_helper%>
     <label>
         User name
-        <input type="text" name="user[user_name]" value="<%=user.user_name unless user.nil?%>">
+        <input type="text" name="user[user_name]" placeholder="user name">
     </label>
+
+    <% if url == users_url %>   <!-- when user is signing up, should provide his email -->
+        <label>
+            Email
+            <input type="email" name="user[email]" placeholder="example@mail.com">
+        </label>
+    <% end %>
+    
     <label>
         Password
-        <input type="text" name="user[password]">
+        <input type="password" name="user[password]" placeholder="password">
     </label>
     <input type="submit" value="<%=submit_text%>">
 </form>
