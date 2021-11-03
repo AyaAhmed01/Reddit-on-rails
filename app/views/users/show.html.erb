@@ -1,0 +1,37 @@
+<h1> <%= @user.user_name.capitalize %> </h1>
+<p> total received votes: <%= @total_vote_score %> </p>
+
+<h3> Activities </h3>
+<section>
+    <p>
+        Created subs
+        <ul>
+            <% @subs.each do |sub|%> 
+                <li><%= link_to sub.title, sub_url(sub) %></li>
+            <% end %>
+        </ul>
+    </p>
+
+    <p>
+        Posts
+        <ul>
+            <% @posts.each do |post|%> 
+                <li>
+                    <%= link_to post.content, post_url(post) %>
+                </li>
+            <% end %>
+        </ul>
+    </p>
+
+    <p>
+        Comments
+        <ul>
+            <% @comments.each do |comment|%> 
+                <li>
+                    <%= link_to comment.content, post_url(comment.post, anchor: "#{comment.id}") %>
+                </li>
+            <% end %>
+        </ul>
+    </p>
+
+</section>
