@@ -5,19 +5,68 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+require 'faker'
+
 ActiveRecord::Base.transaction do 
     User.destroy_all
     Sub.destroy_all
     Post.destroy_all
     PostSubTag.destroy_all
 
-    u1 = User.create!(user_name: 'aya', password: 'ayaland')
-    u2 = User.create!(user_name: 'kevin', password: 'keviny')
+    users = []
+    subs = []
+    posts = []
 
-    s1 = Sub.create!(title: 'islam', description: 'Peace', moderator: u2)
-    s2 = Sub.create!(title: 'sports', description: 'Mo salah', moderator: u1)
-    s3 = Sub.create!(title: 'world', description: 'world news', moderator: u1)
+    10.times do     # seed random users
+        users << User.create!(user_name: Faker::Name.unique.name, 
+                            password: Faker::DrivingLicence.uk_driving_licence,
+                            email: Faker::Internet.email)
+    end
 
-    p1 = Post.create!(title: 'Quraan is paradise', sub_ids: [s1.id], author: u1) # Writing s1.id is better than sub_ids:[1]. As after destroying, records may get bigger ids if there where originally records
-    p2 = Post.create!(title: 'Best world player', sub_ids: [s2.id, s3.id], author: u2)
+    (0..5).each do |i|
+        subs << Sub.create!(title: Faker::Books::Dune.unique.title, 
+                            description: Faker::Books::Dune.quote, 
+                            subscribed_users: [users[i], users[i+1], users[i+2]], 
+                            moderator: users[i+3])
+    end
+
+    (6..10).each do |i|
+        subs << Sub.create!(title: Faker::Movie.unique.title, 
+                            description: Faker::Movies::StarWars.quote, 
+                            subscribed_users: [users[i-3], users[i-1], users[i-2]], 
+                            moderator: users[i-4])
+    end
+
+    (0..5).each do |i|
+        posts << Post.create!(title: Faker::Hacker.noun,
+                            content: Faker::Hacker.say_something_smart,
+                            subs: [subs[i], subs[i+1], subs[i+2]],
+                            author: users[i+3])
+    end
+
+    (0..5).each do |i|
+        posts << Post.create!(title: Faker::Nation.nationality,
+                            content: "Our national sport is #{Faker::Nation.national_sport}.And I learn #{Faker::Nation.language}",
+                            subs: [subs[i+5], subs[i+4], subs[i+3]],
+                            author: users[i])
+    end
+
+
+    (0..5).each do |i|
+        Comment.create!(
+                content: "The post made me #{Faker::Emotion.adjective}",
+                post: posts[i+3],
+                author: users[i])
+    end
+
+    (0..5).each do |i|
+         Comment.create!(
+                content: Faker::Movies::HarryPotter.quote,
+                post: posts[i],
+                author: users[i+3])
+    end
+
+
+    # p1 = Post.create!(title: 'Quraan', description: 'Aya means miracle', sub_ids: [s1.id], author: u1) # Writing s1.id is better than sub_ids:[1]. As after destroying, records may get bigger ids if there where originally records
 end
