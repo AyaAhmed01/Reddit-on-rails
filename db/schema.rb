@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_085152) do
+ActiveRecord::Schema.define(version: 2021_11_02_204122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_085152) do
     t.string "title", null: false
     t.integer "author_id", null: false
     t.string "url"
-    t.text "content"
+    t.text "content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "slug"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_085152) do
     t.string "session_token", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "email", null: false
     t.index ["session_token"], name: "index_users_on_session_token"
   end
 
