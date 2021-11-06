@@ -24,6 +24,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'pry-rails'
 gem 'friendly_id'
 gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+gem 'letter_opener'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -47,7 +48,6 @@ group :development do
   gem 'spring'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'letter_opener'
 end
 
 group :test do
