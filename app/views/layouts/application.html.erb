@@ -11,22 +11,6 @@
   </head>
 
   <body>
-    <header>
-      <% if logged_in? %>
-        <ul>
-          <li> <%= link_to current_user.user_name, user_url(current_user) %> </li>
-          <li><%= link_to "New sub", new_sub_url %></li>
-          <li><%= link_to "My subs", subs_url %></li>
-          <li><%= button_to "Log out", session_url, method: :delete %></li>
-        </ul>
-      <% else %>
-        <ul>
-          <li> <%= button_to "Sign up", new_user_url, method: :get %> </li>
-          <li> <%= button_to "Log in", new_session_url, method: :get %> </li>
-        </ul>
-      <% end %>
-    </header>
-
     <ul class="flash">
       <% flash_messeges = flash[:errors] || flash[:notice] %>
       <% flash_messeges.try(:each) do |msg| %>

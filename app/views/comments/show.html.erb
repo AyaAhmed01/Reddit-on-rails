@@ -1,3 +1,5 @@
+<%= render "users/header" %>
+
 <div class="border">
     <%= link_to @comment.author.user_name, user_url(@comment.author) %><br>
     <%= @comment.content%>  
