@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
             params[:user][:password]
             ) 
         if @user.nil?
-            flash.now[:errors] = "Incorrect user name and/or password"
+            flash.now[:errors] = ["Incorrect user name and/or password"]
             render :new 
         # You can use User#activated? even you didn't define it!
         # Rails gives you this method for free because it matches a column name.
@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
             log_in_user!(@user) 
             redirect_to subs_url
         else
-            flash.now[:errors] = "You must activate your account first!, check your email"
+            flash.now[:errors] = ["You must activate your account first!, check your email"]
             render :new 
         end   
     end

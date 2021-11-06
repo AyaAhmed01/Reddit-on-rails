@@ -6,7 +6,7 @@ class UsersController < ApplicationController
         if @user.save
             email = UserMailer.activation_email(@user)
             email.deliver_now    # send the activation email to user email 
-            flash[:notice] = "Successfully created your account! check your inbox for an activation email" 
+            flash[:notice] = ["Successfully created your account! check your inbox for an activation email"] 
             redirect_to new_session_url 
         else
             flash.now[:errors] = @user.errors.full_messages
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     def activate 
         @user = User.find_by(activation_token: params[:activation_token])
         @user.try(:activate!)
-        flash[:notice] = "Successfully activated your account!"
+        flash[:notice] = ["Successfully activated your account!"]
         log_in_user!(@user) 
         redirect_to root_url  
     end

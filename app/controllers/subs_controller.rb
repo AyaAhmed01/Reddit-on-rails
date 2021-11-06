@@ -23,7 +23,7 @@ class SubsController < ApplicationController
     def update        
         @sub = find_sub_by_id
         if @sub.update(sub_params)
-            flash[:success] = "Sub edited!"
+            flash[:notice] = ["Sub edited!"]
             redirect_to sub_url(@sub) 
         else 
             flash.now[:errors] = @sub.errors.full_messages
