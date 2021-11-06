@@ -1,2 +1,3 @@
 <h1>Sign up</h1>
 <%= render "sessions/log_form", url: users_url, user: @user, submit_text: "Join Reddit!" %>
+<p>Already have an account? <a href="<%= new_session_url%>">Sign in</a></p>
