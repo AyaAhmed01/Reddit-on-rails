@@ -2,14 +2,15 @@ class CommentsController < ApplicationController
     before_action :require_signed_in!, except: :show
     
     def new 
-        @comment = Comment.new(post_id: params[:post_id])  # the top level comment
+        @post = Post.friendly.find(params[:post_id])
+        @comment = Comment.new(post: @post)  # the top level comment
     end
 
     def create 
         @comment = current_user.comments.new(comment_params)
         if @comment.save 
             redirect_to post_url(@comment.post_id)
-        else
+        else 
             flash.now[:errors] = @comment.errors.full_messages
             redirect_to new_post_comment_url(@comment.post_id)
         end
