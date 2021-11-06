@@ -1,5 +1,12 @@
-<h1> Content </h1>
-<%= @comment.content%>  
-<br> 
-<b> Reply to this comment: <b>
-<%= render 'new_comment_form', comment: @child_comment %> 
+<div class="border">
+    <%= link_to @comment.author.user_name, user_url(@comment.author) %><br>
+    <%= @comment.content%>  
+    <br>
+    <ul>
+        <li><%=@comment.votes_score%> upvotes</li>
+        <li><%= button_to "Upvote", upvote_comment_url(@comment), method: :post %></li>
+        <li><%= button_to "Downvote", downvote_comment_url(@comment), method: :post %></li>
+    </ul>
+    Reply: 
+    <%= render 'new_comment_form', comment: @child_comment %> 
+</div>
