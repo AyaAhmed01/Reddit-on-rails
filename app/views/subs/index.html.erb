@@ -1,4 +1,18 @@
-<h1>All the subs!</h1>
-<% Sub.all.each do |sub| %>
+<% if @subs.empty? %>
+    <p> No subs found </p> 
+<% else %>
+    <h1> All subs </h1>
+<% end %>
+
+<form action="<%= subs_url %>" method= "GET">
+    <%= auth_token_helper %>
+    <label>
+        Search sub 
+        <input type="text" name="sub[title]" placeholder="sub name">
+    </label>
+    <input type="submit" value="search">
+</form>
+    
+<% @subs.each do |sub| %>
     <%= link_to sub.title, sub_url(sub)%>
 <%end%>
