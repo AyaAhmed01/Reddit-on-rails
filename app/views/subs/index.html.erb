@@ -13,7 +13,9 @@
     </label>
     <input type="submit" value="search">
 </form>
-    
-<% @subs.each do |sub| %>
-    <%= link_to sub.title, sub_url(sub)%>
-<%end%>
+
+<ul>
+    <% @subs.each do |sub| %>
+        <li><%= link_to sub.title, sub_url(sub)%></li>
+    <%end%>
+</ul>
