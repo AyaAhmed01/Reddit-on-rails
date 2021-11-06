@@ -1,10 +1,15 @@
-<%= comment.author.user_name %>
-<%= comment.created_at %>
-<%= link_to comment.content, comment_url(comment) %>
-<ul>
-    <% all_comments[comment.id].each do |child_comment| %>
-        <li> 
-            <%= render 'comment', comment: child_comment, all_comments: all_comments %>
-        </li>    
-    <% end %>
-</ul> 
+<ul class="border">
+    <li> (<%= comment.votes_score %>) </li>
+    <li> <%= link_to comment.author.user_name, user_url(comment.author) %> </li>
+    <li> <%= comment.created_at %> </li>
+    <li id="<%= comment.id %>"> <%= link_to comment.content, comment_url(comment) %> </li>
+    <li>
+        <ul>
+            <% all_comments[comment.id].each do |child_comment| %>
+                <li> 
+                    <%= render 'comment', comment: child_comment, all_comments: all_comments %>
+                </li>    
+            <% end %>
+        </ul> 
+    </li>
+</ul>
