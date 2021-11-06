@@ -1,0 +1,17 @@
+Welcome to Reddit, <%= @first_name %>
+
+You have successfully signed up to Reddit.com
+your username is: <%= @user.user_name %>.
+
+But wait, we’re not done yet...
+
+To finish verifying your email address and securing your account, click the button below.
+<%= button_to "Verify email address", @activation_url, method: :get %>
+
+
+If you can't click the link, copy and paste this URL into your browser:
+<%= @activation_url %>
+
+
+Thanks for joining..Go to Reddit and dive into any thing!
+
