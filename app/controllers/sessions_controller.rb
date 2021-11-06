@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
     before_action :require_signed_out!, only: [:create, :new]
+    before_action :require_signed_in!, only: [:destroy]
 
     def create
         @user = User.find_by_credentials(
@@ -25,8 +26,7 @@ class SessionsController < ApplicationController
     end
 
     def destroy
-        session[:session_token] = nil 
-        current_user.try(:reset_session_token!)
+        log_out
         redirect_to new_session_url
     end
 end
