@@ -2,9 +2,10 @@ class User < ApplicationRecord
     attr_reader :password
     
     after_initialize :ensure_session_token
-
-    validates :user_name, :password_digest, :session_token, presence: true 
-    validates :user_name, uniqueness: true
+    after_initialize :ensure_activation_token    
+    
+    validates :user_name, :password_digest, :session_token, :activation_token, presence: true 
+    validates :user_name, :email, uniqueness: {message: "has been already taken"}
     validates :password, length: {minimum: 6, allow_nil: true}
 
     has_many :subs,                    # subs that user moderate
@@ -34,9 +35,20 @@ class User < ApplicationRecord
 
     def self.generate_session_token
         begin 
-        token = SecureRandom.urlsafe_base64(16)
+            token = SecureRandom.urlsafe_base64(16)
         end while User.exists?(session_token: token)
         token  
+    end
+
+    def self.generate_activation_token
+        begin  
+            token = SecureRandom.urlsafe_base64(16)
+        end while User.exists?(activation_token: token)
+        token 
+    end
+
+    def activate!
+        self.update!(activated: true)
     end
 
     def subscribed?(sub)
@@ -45,6 +57,10 @@ class User < ApplicationRecord
 
     def ensure_session_token
         self.session_token ||= User.generate_session_token
+    end
+
+    def ensure_activation_token
+        self.activation_token ||= User.generate_activation_token
     end
 
     def password=(password)
