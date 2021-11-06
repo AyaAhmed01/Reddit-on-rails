@@ -1,21 +1,27 @@
-<h1><%= @sub.title%></h1>
+<div class="border">
+    <h1><%= @sub.title%></h1>
 
-Description
-<%= @sub.description%>
+    <b> Description </b>
+    <p> <%= @sub.description%> </p>
 
-<% if current_user.subscribed?(@sub)%>
-    <%= button_to "Unsubscribe", unsubscribe_sub_url(@sub), method: :delete %>
-<% else %>
-    <%= button_to "Subscribe", subscribe_sub_url(@sub), method: :post %>
-<% end %>
+    <% unless @sub.moderator == current_user %>
+        <% if current_user.try(:subscribed?, @sub)%>
+            <%= button_to "Unsubscribe", unsubscribe_sub_url(@sub), method: :delete %>
+        <% else %>
+            <%= button_to "Subscribe", subscribe_sub_url(@sub), method: :post %>
+        <% end %>
+    <% end %>
 
-<%= link_to "Make New Post!", new_post_url %>
-<% @posts.each do |post|%>
-    <%= link_to "(#{post.votes_score}) #{post.title}", post_url(post) %>
-<%end%>
+    <%= link_to "Make New Post!", new_post_url %>
+    <ul>
+        <% @posts.each do |post|%>
+            <li><%= link_to "(#{post.votes_score}) #{post.title}", post_url(post) %></li>
+        <%end%>
+    </ul>
 
-<% if @sub.moderator == current_user %>
-    <a href="<%= edit_sub_url(@sub) %>"> Edit </a>
-    <%= button_to "Delete", sub_url(@sub), method: :delete %>
-<% end %>
+    <% if @sub.moderator == current_user %>
+        <a href="<%= edit_sub_url(@sub) %>"> Edit </a>
+        <%= button_to "Delete", sub_url(@sub), method: :delete %>
+    <% end %>
+</div>
 
