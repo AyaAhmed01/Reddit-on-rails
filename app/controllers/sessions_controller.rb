@@ -1,12 +1,23 @@
 class SessionsController < ApplicationController
+    before_action :require_signed_out!, only: [:create, :new]
+
     def create
-        @user = User.find_by_credentials(user_params)
-        unless @user.nil?
-            log_in_user!(@user) 
-        else
+        @user = User.find_by_credentials(
+            params[:user][:user_name], 
+            params[:user][:password]
+            ) 
+        if @user.nil?
             flash.now[:errors] = "Incorrect user name and/or password"
             render :new 
-        end
+        # You can use User#activated? even you didn't define it!
+        # Rails gives you this method for free because it matches a column name.
+        elsif @user.activated?    
+            log_in_user!(@user) 
+            redirect_to subs_url
+        else
+            flash.now[:errors] = "You must activate your account first!, check your email"
+            render :new 
+        end   
     end
 
     def new
@@ -15,12 +26,7 @@ class SessionsController < ApplicationController
 
     def destroy
         session[:session_token] = nil 
-        current_user.reset_session_token!
+        current_user.try(:reset_session_token!)
         redirect_to new_session_url
-    end
-
-    private
-    def user_params 
-        params.require(:user).permit(:user_name, :password)
     end
 end
