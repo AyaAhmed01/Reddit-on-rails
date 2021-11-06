@@ -47,26 +47,42 @@ ActiveRecord::Base.transaction do
 
     (0..5).each do |i|
         posts << Post.create!(title: Faker::Nation.nationality,
-                            content: "Our national sport is #{Faker::Nation.national_sport}.And I learn #{Faker::Nation.language}",
+                            content: "Our national sport is #{Faker::Nation.national_sport}. And I learn #{Faker::Nation.language}",
                             subs: [subs[i+5], subs[i+4], subs[i+3]],
                             author: users[i])
     end
 
-
+    comments = []
     (0..5).each do |i|
-        Comment.create!(
-                content: "The post made me #{Faker::Emotion.adjective}",
-                post: posts[i+3],
-                author: users[i])
+        comments << Comment.create!(
+                    content: "The post made me #{Faker::Emotion.adjective}",
+                    post: posts[i+3],
+                    author: users[i])
     end
 
+    
     (0..5).each do |i|
-         Comment.create!(
-                content: Faker::Movies::HarryPotter.quote,
-                post: posts[i],
-                author: users[i+3])
+        comments << Comment.create!(
+                    content: Faker::Movies::HarryPotter.quote,
+                    post: posts[i],
+                    author: users[i+3])
     end
 
+    nested_comments = []
+    
+    (0...20).each do |i|
+        nested_comments << comments[i % 9].child_comments.create!(
+                            content: "Hello world, My name is #{Faker::Name.name}. And I am #{Faker::Job.title}",
+                            post: comments[i % 9].post,
+                            author: users[(i + 1) % 9])
+    end
+
+    (0...20).each do |i|
+        nested_comments[i].child_comments.create!(
+                            content: Faker::Movies::HarryPotter.quote,
+                            post: comments[i % 9].post,
+                            author: users[(i + 3) % 9])
+    end
 
     # p1 = Post.create!(title: 'Quraan', description: 'Aya means miracle', sub_ids: [s1.id], author: u1) # Writing s1.id is better than sub_ids:[1]. As after destroying, records may get bigger ids if there where originally records
 end
