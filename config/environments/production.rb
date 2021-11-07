@@ -63,8 +63,13 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "reddit_clone_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.default_url_options = { host: 'https://on-rails-reddit.herokuapp.com' }
 
-  config.action_mailer.default_url_options = { host: 'www.redditonrails.com' }
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :letter_opener_web
+  config.action_mailer.perform_deliveries = true
+
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
