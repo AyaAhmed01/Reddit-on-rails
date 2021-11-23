@@ -1,6 +1,8 @@
 <<<<<<< HEAD
 # README
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d57f6275690e49ea9061a0a502517aca)](https://app.codacy.com/gh/AyaAhmed01/Reddit-on-rails?utm_source=github.com&utm_medium=referral&utm_content=AyaAhmed01/Reddit-on-rails&utm_campaign=Badge_Grade_Settings)
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
