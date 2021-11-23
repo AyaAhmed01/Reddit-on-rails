@@ -13,3 +13,7 @@ Users can sign up and log in. Logged in users can create and subscribe to subs, 
 
 ### Live demo
 In [this live version](https://on-rails-reddit.herokuapp.com/subs) you can browse the website's subs, users, posts and comments. Features requiring log in such as creating posts are only available in development environment yet.
+
+#### Future improvements
+* Support multiple sessions
+* Improve website's frontend
