@@ -1,28 +1,14 @@
-<<<<<<< HEAD
-# README
+# Reddit On Rails
+A social media website mimics Reddit with its functionalities. 
+Users can sign up and log in. Logged in users can create and subscribe to subs, write posts and tagging them to different subs, comment on other posts, reply to comments and upvote/downvote posts and comments.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+### Tools
+* Ruby on Rails for backend and development
+* Postgresql engine for database management
+* Used [Faker gem](https://github.com/faker-ruby/faker) to seed database generating fake data such as names, job titles, books titles and quotes.
+* Used [FriendlyId gem](https://github.com/norman/friendly_id) to create URL's with human-friendly strings instead of numeric ids for ActiveRecord models
+* Used [letter opener gem](https://github.com/ryanb/letter_opener) to preview activation emails in browser instead of sending them in development environment
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-=======
-# Reddit-clone
->>>>>>> 1c5bf5f73ccfc060ecedfad140c270f5da12217e
+### Live demo
+In [this live version](https://on-rails-reddit.herokuapp.com/subs) you can browse the website's subs, users, posts and comments. But features requiring log in such as creating posts are only available in development environment yet.
